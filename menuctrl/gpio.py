@@ -1,10 +1,8 @@
-import time
 import threading
 import gpiod
 
 from datetime import timedelta
-from gpiod.line import Bias, Edge
-from .lcd import LCD
+from gpiod.line import Bias
 
 
 class AuriliaGPIO:

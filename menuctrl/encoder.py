@@ -1,5 +1,5 @@
 from .gpio import GPIO
-from gpiod.line import Bias, Edge
+from gpiod.line import Edge
 
 
 def task1():

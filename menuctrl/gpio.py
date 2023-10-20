@@ -7,28 +7,27 @@ from datetime import timedelta
 from gpiod.line import Bias, Edge
 from .lcd import LCD
 
+
 class AuriliaGPIO:
     def __init__(self):
-        self.LCD = LCD()
+        self.chip_path = "/dev/gpiochip0"
 
-    def add_event_detect(self):
-        thread = threading.Thread(target=self.pin_interrupt_thread)
+    def add_event_detect(self, pin_number, edge_detection, callback_function, bouncetime=250):
+        thread = threading.Thread(target=self.async_watch_line_value, args=(pin_number, edge_detection,
+                                                                            callback_function, bouncetime))
         thread.start()
 
-    def pin_interrupt_thread(self):
-        self.async_watch_line_value("/dev/gpiochip0", 25)
-
-    def async_watch_line_value(self, chip_path, line_offset):
+    def async_watch_line_value(self, pin_number, edge_detection, callback_function, bouncetime):
         # Assume a button connecting the pin to ground,
         # so pull it up and provide some debounce.
         with gpiod.request_lines(
-            chip_path,
+            self.chip_path,
             consumer="async-watch-line-value",
             config={
-                line_offset: gpiod.LineSettings(
-                    edge_detection=Edge.FALLING,
+                pin_number: gpiod.LineSettings(
+                    edge_detection=edge_detection,
                     bias=Bias.PULL_UP,
-                    debounce_period=timedelta(milliseconds=50),
+                    debounce_period=timedelta(milliseconds=bouncetime),
                 )
             },
         ) as request:
@@ -39,7 +38,7 @@ class AuriliaGPIO:
                 # separately using the return value (fd, event) from poll()
                 poll.poll()
                 for event in request.read_edge_events():
-                    self.LCD.message("pimpel")
+                    callback_function()
 
 
 GPIO = AuriliaGPIO()

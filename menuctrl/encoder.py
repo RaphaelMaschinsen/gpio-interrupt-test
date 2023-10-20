@@ -10,4 +10,3 @@ INPUT = 25
 def test():
     gpio = AuriliaGPIO()
     gpio.add_event_detect()
-    gpio.add_event_detect()

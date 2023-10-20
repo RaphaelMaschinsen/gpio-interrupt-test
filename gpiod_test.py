@@ -4,7 +4,6 @@ import select
 from datetime import timedelta
 from gpiod.line import Bias, Edge
 
-
 def edge_type_str(event):
     if event.event_type is event.Type.RISING_EDGE:
         return "Rising"

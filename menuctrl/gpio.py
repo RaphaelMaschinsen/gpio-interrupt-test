@@ -27,7 +27,7 @@ class AuriliaGPIO:
                 pin_number: gpiod.LineSettings(
                     edge_detection=Edge.BOTH,
                     bias=Bias.PULL_UP,
-                    debounce_period=timedelta(milliseconds=10),
+                    debounce_period=timedelta(milliseconds=bouncetime),
                 )
             },
         ) as request:

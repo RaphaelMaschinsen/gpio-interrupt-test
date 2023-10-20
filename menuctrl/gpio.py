@@ -10,11 +10,11 @@ class AuriliaGPIO:
         self.chip_path = "/dev/gpiochip0"
 
     def add_event_detect(self, pin_number, edge_detection, callback_function, bouncetime=0):
-        thread = threading.Thread(target=self.async_watch_line_value, args=(pin_number, edge_detection,
+        thread = threading.Thread(target=self.poll_line_value, args=(pin_number, edge_detection,
                                                                             callback_function, bouncetime))
         thread.start()
 
-    def async_watch_line_value(self, pin_number, edge_detection, callback_function, bouncetime):
+    def poll_line_value(self, pin_number, edge_detection, callback_function, bouncetime):
         # Assume a button connecting the pin to ground,
         # so pull it up and provide some debounce.
         with gpiod.request_lines(

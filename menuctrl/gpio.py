@@ -13,7 +13,7 @@ class AuriliaGPIO:
         self.chip_path = "/dev/gpiochip0"
 
     def add_event_detect(self, pin_number, edge_detection, callback_function, bouncetime=250):
-        thread = threading.Thread(target=self.async_watch_line_value, args=(self, pin_number, edge_detection,
+        thread = threading.Thread(target=self.async_watch_line_value, args=(pin_number, edge_detection,
                                                                             callback_function, bouncetime))
         thread.start()
 
@@ -38,7 +38,7 @@ class AuriliaGPIO:
                 # separately using the return value (fd, event) from poll()
                 poll.poll()
                 for event in request.read_edge_events():
-                    callback_function()
+                    print("hello")
 
 
 GPIO = AuriliaGPIO()

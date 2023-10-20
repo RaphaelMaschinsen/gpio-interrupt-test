@@ -38,7 +38,7 @@ class AuriliaGPIO:
                 # separately using the return value (fd, event) from poll()
                 poll.poll()
                 for event in request.read_edge_events():
-                    print("hello")
+                    print(bouncetime)
 
 
 GPIO = AuriliaGPIO()

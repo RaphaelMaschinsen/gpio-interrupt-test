@@ -7,8 +7,10 @@ from datetime import timedelta
 from gpiod.line import Bias, Edge
 from .lcd import LCD
 
-
 class AuriliaGPIO:
+    def __init__(self):
+        self.LCD = LCD()
+
     def add_event_detect(self):
         thread = threading.Thread(target=self.pin_interrupt_thread)
         thread.start()

@@ -12,7 +12,7 @@ class AuriliaGPIO:
     def __init__(self):
         self.chip_path = "/dev/gpiochip0"
 
-    def add_event_detect(self, pin_number, edge_detection, callback_function, bouncetime=250):
+    def add_event_detect(self, pin_number, edge_detection, callback_function, bouncetime=50):
         thread = threading.Thread(target=self.async_watch_line_value, args=(pin_number, edge_detection,
                                                                             callback_function, bouncetime))
         thread.start()

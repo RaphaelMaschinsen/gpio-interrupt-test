@@ -21,11 +21,11 @@ class AuriliaGPIO:
         # Assume a button connecting the pin to ground,
         # so pull it up and provide some debounce.
         with gpiod.request_lines(
-            "/dev/gpiochip0",
+            self.chip_path,
             consumer="async-watch-line-value",
             config={
                 pin_number: gpiod.LineSettings(
-                    edge_detection=Edge.BOTH,
+                    edge_detection=edge_detection,
                     bias=Bias.PULL_UP,
                     debounce_period=timedelta(milliseconds=bouncetime),
                 )
@@ -38,7 +38,7 @@ class AuriliaGPIO:
                 # separately using the return value (fd, event) from poll()
                 poll.poll()
                 for event in request.read_edge_events():
-                    print(bouncetime)
+                    callback_function()
 
 
 GPIO = AuriliaGPIO()

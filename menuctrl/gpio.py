@@ -1,7 +1,6 @@
 import time
 import threading
 import gpiod
-import select
 
 from datetime import timedelta
 from gpiod.line import Bias, Edge
@@ -22,7 +21,7 @@ class AuriliaGPIO:
         # so pull it up and provide some debounce.
         with gpiod.request_lines(
             self.chip_path,
-            consumer="async-watch-line-value",
+            consumer="watch-line-rising",
             config={
                 pin_number: gpiod.LineSettings(
                     edge_detection=edge_detection,
@@ -31,14 +30,14 @@ class AuriliaGPIO:
                 )
             },
         ) as request:
-            poll = select.poll()
-            poll.register(request.fd, select.POLLIN)
             while True:
-                # Other fds could be registered with the poll and be handled
-                # separately using the return value (fd, event) from poll()
-                poll.poll()
+                # Blocks until at least one event is available
                 for event in request.read_edge_events():
-                    callback_function()
+                    print(
+                        "line: {}  type: Rising   event #{}".format(
+                            event.line_offset, event.line_seqno
+                        )
+                    )
 
 
 GPIO = AuriliaGPIO()

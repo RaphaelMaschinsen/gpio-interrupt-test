@@ -33,11 +33,7 @@ class AuriliaGPIO:
             while True:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
-                    print(
-                        "line: {}  type: Rising   event #{}".format(
-                            event.line_offset, event.line_seqno
-                        )
-                    )
+                    callback_function()
 
 
 GPIO = AuriliaGPIO()

@@ -18,7 +18,7 @@ class AuriliaGPIO:
         # so pull it up and provide some debounce.
         with gpiod.request_lines(
             self.chip_path,
-            consumer="watch-line-rising",
+            consumer="watch-line",
             config={
                 pin_number: gpiod.LineSettings(
                     edge_detection=edge_detection,
@@ -35,8 +35,8 @@ class AuriliaGPIO:
     def get_line_value(self, pin_number):
         with gpiod.request_lines(
             self.chip_path,
-            consumer="get-line-value",
-            config={}
+            consumer="watch-line",
+            config={pin_number: Direction.AS_IS}
         ) as request:
             value = request.get_value(pin_number)
             print("{}={}".format(pin_number, value))

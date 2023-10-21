@@ -32,13 +32,12 @@ class AuriliaGPIO:
             while True:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
-                    print(event.event_type)
                     self.pin_values.update({pin_number: request.get_value(pin_number).value})
 
-                    if (edge_detection == Edge.RISING and event.event_type == event.Type.RISING_EDGE):
+                    if ((edge_detection == Edge.RISING) and (event.event_type == event.Type.RISING_EDGE)):
                         callback_function()
 
-                    elif (edge_detection == Edge.FALLING and event.event_type == event.Type.FALLING_EDGE):
+                    elif ((edge_detection == Edge.FALLING) and (event.event_type == event.Type.FALLING_EDGE)):
                         callback_function()
 
                     elif (edge_detection == Edge.BOTH):

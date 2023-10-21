@@ -11,7 +11,7 @@ def task2():
 
 
 def test():
-    GPIO.add_event_detect(25, Edge.FALLING, task1, bouncetime=30)
+    GPIO.add_event_detect(25, Edge.RISING, task1, bouncetime=30)
     GPIO.add_event_detect(14, Edge.BOTH, task2)
     GPIO.add_event_detect(26, Edge.BOTH, task2)
     while True:

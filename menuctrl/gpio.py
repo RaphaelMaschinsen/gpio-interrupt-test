@@ -41,7 +41,7 @@ class AuriliaGPIO:
             config={pin_number: gpiod.LineSettings(direction=Direction.AS_IS)}
         ) as request:
             value = request.get_value(pin_number)
-            print("{}={}".format(pin_number, value))
+            print("{}={}".format(pin_number, value == 1))
 
 
 GPIO = AuriliaGPIO()

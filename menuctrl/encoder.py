@@ -14,7 +14,3 @@ def test():
     GPIO.add_event_detect(25, Edge.FALLING, task1, bouncetime=30)
     GPIO.add_event_detect(14, Edge.BOTH, task2)
     GPIO.add_event_detect(26, Edge.BOTH, task2)
-    while True:
-        time.sleep(1)
-        GPIO.get_line_value(26)
-    

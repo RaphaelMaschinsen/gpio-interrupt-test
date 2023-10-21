@@ -30,6 +30,7 @@ class AuriliaGPIO:
             while True:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
+                    request.get_value(pin_number)
                     callback_function()
     
     def get_line_value(self, pin_number):

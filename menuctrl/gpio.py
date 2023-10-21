@@ -36,7 +36,7 @@ class AuriliaGPIO:
         with gpiod.request_lines(
             self.chip_path,
             consumer="watch-line",
-            config={pin_number: Direction.AS_IS}
+            config={pin_number: gpiod.LineSettings(direction=Direction.AS_IS)}
         ) as request:
             value = request.get_value(pin_number)
             print("{}={}".format(pin_number, value))

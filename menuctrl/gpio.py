@@ -32,6 +32,7 @@ class AuriliaGPIO:
             while True:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
+                    print(event.event_type)
                     self.pin_values.update({pin_number: request.get_value(pin_number).value})
                     callback_function()
 

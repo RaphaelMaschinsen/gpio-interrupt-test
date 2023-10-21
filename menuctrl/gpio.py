@@ -28,11 +28,11 @@ class AuriliaGPIO:
                 )
             },
         ) as request:
-            self.pin_values.update({pin_number, request.get_value(pin_number).value})
+            self.pin_values.update({pin_number: request.get_value(pin_number).value})
             while True:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
-                    self.pin_values.update({pin_number, request.get_value(pin_number).value})
+                    self.pin_values.update({pin_number: request.get_value(pin_number).value})
                     callback_function()
 
     def get_line_value(self, pin_number):

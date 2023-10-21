@@ -34,7 +34,15 @@ class AuriliaGPIO:
                 for event in request.read_edge_events():
                     print(event.event_type)
                     self.pin_values.update({pin_number: request.get_value(pin_number).value})
-                    callback_function()
+
+                    if (edge_detection == Edge.RISING and event.event_type == event.Type.RISING_EDGE):
+                        callback_function()
+
+                    elif (edge_detection == Edge.FALLING and event.event_type == event.Type.FALLING_EDGE):
+                        callback_function()
+
+                    elif (edge_detection == Edge.BOTH):
+                        callback_function()
 
     def get_line_value(self, pin_number):
         try:

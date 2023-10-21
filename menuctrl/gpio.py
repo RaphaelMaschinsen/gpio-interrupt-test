@@ -31,17 +31,8 @@ class AuriliaGPIO:
                 # Blocks until at least one event is available
                 for event in request.read_edge_events():
                     value =  request.get_value(pin_number)
-                    print("{}={}".format(pin_number, value))
+                    print(int(value))
                     callback_function()
-    
-    def get_line_value(self, pin_number):
-        with gpiod.request_lines(
-            self.chip_path,
-            consumer="watch-line",
-            config={pin_number: gpiod.LineSettings(direction=Direction.AS_IS)}
-        ) as request:
-            value = request.get_value(pin_number)
-            print(int(value))
 
 
 GPIO = AuriliaGPIO()
